@@ -39,11 +39,19 @@ class UCLogger:
 		logLine = "UC Logger ERROR (Time : {}):{}\n".format(currentTime, _infoString)
 		self.outputWriter.writeError(logLine)
 
+class UCLogging:
+	sharedLogger = None
+
+	def __init__(self, _outputType, _fileName = None):
+		if not self.sharedLogger:
+			self.sharedLogger = UCLogger(_outputType, _fileName)
+
+	def logger(self):
+		return self.sharedLogger
+
 def main():
-	print "Hello World!"
-	ucl = UCLogger("out")
-	ucl.logInfo("TEST")
-	ucl.logError("TEST2")
+	UCLogging("out").logger().logInfo("Hello!")
+	UCLogging("").logger().logInfo("World!")
 
 if __name__ == "__main__":
 	main()
